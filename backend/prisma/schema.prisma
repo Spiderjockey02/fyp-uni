@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Playlist {
+  id                              Int         @id         @default(autoincrement())
+  title                           String   
+  createdAt                       DateTime    @default(now())
+  updatedAt                       DateTime    @default(now())
+  videos                          Video[]
+  owner                           User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId                         Int
+}
+
+model Video {
+  id                              Int         @id         @default(autoincrement())
+  title                           String    
+  views                           Int         @default(0)
+  comments                        Int
+  likes                           Int         @default(0)
+  dislikes                        Int         @default(0)
+  createdAt                       DateTime    @default(now())
+  playlists                       Playlist[]
+  owner                           User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId                         Int
+}
+
+model User {
+  id                              Int         @id         @default(autoincrement())
+  firstName                       String
+  lastName                        String
+  videos                          Video[]
+  playlists                       Playlist[]
+}
