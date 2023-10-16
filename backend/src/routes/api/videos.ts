@@ -22,7 +22,7 @@ export function run() {
 	router.get('/:id', async (req, res) => {
 		// Get ID and validate
 		const id = req.params.id;
-		if (Number.isInteger(id)) return res.json({ error: '' });
+		if (Number.isInteger(id)) return res.json({ error: 'Parameter: id must be a number.' });
 
 		try {
 			const video = await getVideoById(parseInt(id));
