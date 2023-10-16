@@ -1,16 +1,17 @@
 import { Router } from 'express';
-import { getVideos } from '../database/Video';
+import { getAllUsers } from '../../database/User';
+
 const router = Router();
 
 export function run() {
-	router.get('/videos', async (_req, res) => {
+	router.get('/', async (_req, res) => {
 		// Fetch all videos from database
 		try {
-			const videos = await getVideos();
-			res.json({ videos });
+			const users = await getAllUsers();
+			res.json({ users });
 		} catch (err) {
 			console.log(err);
-			res.json({ videos: [] });
+			res.json({ users: [] });
 		}
 	});
 
