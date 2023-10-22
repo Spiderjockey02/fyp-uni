@@ -8,7 +8,7 @@ export function run() {
 	});
 
 	// Return all videos
-	router.get('/all', async (_req, res) => {
+	router.get('/', async (_req, res) => {
 		// Fetch all videos from database
 		try {
 			const videos = await getAllVideos();

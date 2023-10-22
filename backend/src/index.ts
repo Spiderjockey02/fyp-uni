@@ -35,4 +35,3 @@ const Logger = new LogClass();
 		.use('/api/playlists', (await import('./routes/api/playlists')).run())
 		.listen(8080, () => console.log('Started on port: 8080'));
 })();
-
