@@ -8,7 +8,7 @@ export default function NavBar() {
 		<nav className="flex-div">
 			<div className="nav-left flex-div">
 				<Link href="/">
-					<Image className="logo" src="/imgs/logo.png" width={130} height={30} alt="logo" />
+					<Image className="logo" src="https://placehold.co/130x30" width={130} height={30} alt="logo" />
 				</Link>
 			</div>
 			<div className="nav-middle flex-div">
@@ -16,7 +16,6 @@ export default function NavBar() {
 					<input type="text" placeholder="Search" />
 					<FontAwesomeIcon icon={faSearch} width={15} height={15} />
 				</div>
-				<Image className="mic-icon" src="/imgs/voice-search.png" width={16} height={22} alt="voice search" />
 			</div>
 			<div className="nav-right flex-div">
 				<FontAwesomeIcon icon={faUpload} width={25} height={25} />

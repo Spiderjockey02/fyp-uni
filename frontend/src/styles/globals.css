@@ -10,6 +10,44 @@ a {
   color: #5a5a5a;
 }
 
+nav {
+  padding: 10px 2%;
+  justify-content: space-between;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav-right img {
+  margin-right: 25px;
+}
+
+.nav-right .user-icon {
+  border-radius: 50%;
+  margin-right: 0;
+}
+
+.nav-left .menu-icon {
+  margin-right: 25px;
+}
+
+.nav-middle .search-box {
+  border: 1px solid #ccc;
+  margin-right: 15px;
+  padding: 8px 12px;
+  border-radius: 25px;
+}
+
+.nav-middle .search-box input {
+  width: 400px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+
 .flex-div {
   display: flex;
   align-items: center;

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import PlaylistCarousel from '@/components/PlaylistCarousel';
 import type { Video, Playlist } from '@/types';
-import NavBar from '@/components/Navbar';
 import Carousel from '@/components/Carousel';
+import MainLayout from '@/layouts/main';
 
 interface Props {
 	videos: Array<Video>
@@ -10,20 +10,24 @@ interface Props {
 	error?: string
 }
 
-export default function Home({ videos, playlists, error }: Props) {
+export default function Home({ videos, playlists }: Props) {
 	return (
-		<div className="container-fluid">
-			{/* Navbar */}
-			<NavBar />
+		<MainLayout>
+			<div className="container-fluid">
+				{/* Recently uploaded content carousel */}
+				<Carousel/>
 
-			{/* Recently uploaded content carousel */}
-			<Carousel/>
-
-			{/* Upload playlists */}
-			{playlists.map(playlist => (
-				<PlaylistCarousel key={playlist.id} playlist={playlist} videos={videos.filter(() => Math.random() > 0.8)} />
-			))}
-		</div>
+				{/* Upload playlists */}
+				<div className="container">
+					{playlists.map(playlist => (
+						<>
+							<PlaylistCarousel playlist={playlist} videos={videos.filter(() => Math.random() > 0.8)} />
+							<hr style={{ borderColor: 'grey' }}/>
+						</>
+					))}
+				</div>
+			</div>
+		</MainLayout>
 	);
 }
 
