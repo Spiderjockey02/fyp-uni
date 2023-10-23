@@ -14,14 +14,15 @@ export default function NavBar() {
 			<div className="nav-middle flex-div">
 				<div className="search-box flex-div">
 					<input type="text" placeholder="Search" />
-					<FontAwesomeIcon icon={faSearch} width={15} height={15} />
+					<a href="/search">
+						<FontAwesomeIcon icon={faSearch} width={15} height={15} />
+					</a>
 				</div>
 			</div>
 			<div className="nav-right flex-div">
 				<FontAwesomeIcon icon={faUpload} width={25} height={25} />
-				<Image src="/imgs/more.png" width={25} height={25} alt="menu" />
 				<FontAwesomeIcon icon={faBell} width={25} height={25} />
-				<Image className="user-icon" src="/imgs/Jack.png" width={35} height={35} alt="menu" />
+				<Image className="user-icon" src="https://placehold.co/35x35" width={35} height={35} alt="menu" />
 			</div>
 		</nav>
 	);

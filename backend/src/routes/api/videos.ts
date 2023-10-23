@@ -8,7 +8,7 @@ export function run() {
 
 		// Fetch all videos from database
 		try {
-			const [videos, total] = await Promise.all([fetchVideos({ page: Number.isInteger(page) ? Number(page) : 0 }), fetchVideoCount()]);
+			const [videos, total] = await Promise.all([fetchVideos({ page: Number.isInteger(page) ? Number(page) : 0, includeOwner: true }), fetchVideoCount()]);
 			res.json({ videos, total });
 		} catch (err) {
 			console.log(err);

@@ -7,9 +7,5 @@ import { useEffect } from 'react';
 config.autoAddCss = false;
 export default function App({ Component, pageProps }: AppProps) {
 
-	useEffect(() => {
-		window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.min.js');
-	}, []);
-
 	return <Component {...pageProps} />;
 }

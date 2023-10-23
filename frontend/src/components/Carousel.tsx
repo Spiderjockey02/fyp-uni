@@ -1,27 +1,40 @@
-export default function Carousel() {
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+
+interface Props {
+	images: Array<string>
+}
+
+export default function Carousel({ images }: Props) {
+	const [current, setCurrent] = useState(0);
+
+	useEffect(() => {
+
+		// Implementing the setInterval method
+		const interval = setInterval(() => {
+			setCurrent(current + 1 == images.length ? 0 : current + 1);
+		}, 10_000);
+
+		// Clearing the interval
+		return () => clearInterval(interval);
+	}, [current]);
+
+
 	return (
-		<div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
+		<div id="carouselExampleIndicators" className="carousel slide">
 			<div className="carousel-indicators">
-				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				{images.map((image, index) => (
+					<button type="button" key={index} data-bs-target="#carouselExampleIndicators" className={`${current == index ? 'active' : ''}`} aria-current="true" aria-label={`Slide ${index}`}></button>
+				))}
 			</div>
 			<div className="carousel-inner">
 				<div className="carousel-item active">
-					<img src="https://placehold.co/1080x300" />
-				</div>
-				<div className="carousel-item">
-					<img src="https://placehold.co/1080x300" />
-				</div>
-				<div className="carousel-item">
-					<img src="https://placehold.co/1080x300" />
+					<img src={images[current]}/>
 				</div>
 			</div>
-			<button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-				<span className="carousel-control-prev-icon" aria-hidden="true"></span>
+			<button type="button" onClick={() => setCurrent(current == 0 ? images.length - 1 : current - 1)}>
 			</button>
-			<button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-				<span className="carousel-control-next-icon" aria-hidden="true"></span>
+			<button type="button" onClick={() => setCurrent(current + 1 == images.length ? 0 : current + 1)}>
 			</button>
 		</div>
 	);

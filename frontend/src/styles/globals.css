@@ -47,6 +47,28 @@ nav {
   background: transparent;
 }
 
+@media (max-width: 900px) {
+  .menu-icon {
+    display: none;
+  }
+  .container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .nav-right img {
+    display: none;
+  }
+
+  .nav-right .user-icon {
+    display: block;
+    width: 30px;
+  }
+
+  .nav-middle .search-box input {
+    width: 100px;
+  }
+}
 
 .flex-div {
   display: flex;
@@ -136,6 +158,13 @@ nav {
   list-style: none;
 }
 
+.carousel-button {
+  position: relative;
+  width: 30px;
+  height: 100%;
+  margin-right: 20px;
+}
+
 .carousel-inner {
   position: relative;
   width: 100%;
@@ -156,7 +185,7 @@ nav {
 .carousel-item > img {
   width: 100vw;
 }
-.carousel-item-next, .carousel-item-prev, .carousel-item.active {
+.carousel-item.active {
   display: block;
 }
 
@@ -177,6 +206,36 @@ nav {
   border-bottom: 10px solid transparent;
   opacity: .5;
   transition: opacity .6s ease;
+}
+.carousel-control-next {
+  right: 0;
+}
+.carousel-control-prev {
+  left: 0;
+}
+.carousel-control-next, .carousel-control-prev {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #000000;
+  text-align: center;
+  opacity: .5;
+  margin: 0 -15px;
+  background: 0;
+  border: 0;
+}
+
+.carousel-control-next:hover, .carousel-control-prev:hover {
+  cursor: pointer;
 }
 
 .carousel-indicators .active {
