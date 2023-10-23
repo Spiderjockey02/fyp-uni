@@ -1,21 +1,18 @@
 import { Router } from 'express';
-import { getAllVideos, getVideoById } from '../../database/Video';
+import { fetchVideos, fetchVideoById, fetchVideoCount } from '../../database/Video';
 const router = Router();
 
 export function run() {
-	router.get('/:id/comments', (_req, res) => {
-		res.json({ error: 'coming soon' });
-	});
+	router.get('/', async (req, res) => {
+		const page = req.query.page;
 
-	// Return all videos
-	router.get('/', async (_req, res) => {
 		// Fetch all videos from database
 		try {
-			const videos = await getAllVideos();
-			res.json({ videos });
+			const [videos, total] = await Promise.all([fetchVideos({ page: Number.isInteger(page) ? Number(page) : 0 }), fetchVideoCount()]);
+			res.json({ videos, total });
 		} catch (err) {
 			console.log(err);
-			res.json({ videos: [] });
+			res.json({ videos: [], total: 0 });
 		}
 	});
 
@@ -25,11 +22,11 @@ export function run() {
 		if (Number.isInteger(id)) return res.json({ error: 'Parameter: id must be a number.' });
 
 		try {
-			const video = await getVideoById(parseInt(id));
+			const video = await fetchVideoById({ id: parseInt(id) });
 			res.json({ video });
-		} catch (err: any) {
+		} catch (err) {
 			console.log(err);
-			res.json({ error: err.message });
+			res.json({ video: {} });
 		}
 
 	});

@@ -33,5 +33,5 @@ const Logger = new LogClass();
 		})
 		.use('/api/videos', (await import('./routes/api/videos')).run())
 		.use('/api/playlists', (await import('./routes/api/playlists')).run())
-		.listen(8080, () => console.log('Started on port: 8080'));
+		.listen(8080, () => Logger.ready('Started on port: 8080'));
 })();
