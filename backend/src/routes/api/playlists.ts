@@ -1,15 +1,14 @@
 import { Router } from 'express';
 import { fetchPlaylists, fetchPlaylistById, fetchPlaylistCount } from '../../database/Playlist';
-
 const router = Router();
 
 export function run() {
 	router.get('/', async (req, res) => {
-		const page = req.query.page;
+		const page = req.query.page as string;
 
 		// Fetch playlists from database
 		try {
-			const [playlists, total] = await Promise.all([fetchPlaylists({ page: Number.isInteger(page) ? Number(page) : 0 }), fetchPlaylistCount()]);
+			const [playlists, total] = await Promise.all([fetchPlaylists({ page: isNaN(parseInt(page)) ? 0 : Number(page) }), fetchPlaylistCount()]);
 			res.json({ playlists, total });
 		} catch (err) {
 			console.log(err);
