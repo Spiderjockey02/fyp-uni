@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import styles from '@/styles/Carousel.module.css';
 
 interface Props {
 	images: Array<string>
 }
 
-export default function Carousel({ images }: Props) {
+export default function BannerCarousel({ images }: Props) {
 	const [current, setCurrent] = useState(0);
 
 	useEffect(() => {
@@ -21,16 +21,18 @@ export default function Carousel({ images }: Props) {
 
 
 	return (
-		<div id="carouselExampleIndicators" className="carousel slide">
-			<div className="carousel-indicators">
+		<div id="carouselExampleIndicators" className={styles.carousel}>
+			<div className={styles['carousel-indicators']}>
 				{images.map((image, index) => (
-					<button type="button" key={index} data-bs-target="#carouselExampleIndicators" className={`${current == index ? 'active' : ''}`} aria-current="true" aria-label={`Slide ${index}`}></button>
+					<button type="button" key={index} data-bs-target="#carouselExampleIndicators" className={`${current == index ? styles.active : ''}`} aria-current="true" aria-label={`Slide ${index}`} onClick={() => setCurrent(index)}></button>
 				))}
 			</div>
-			<div className="carousel-inner">
-				<div className="carousel-item active">
-					<img src={images[current]}/>
-				</div>
+			<div className={styles['carousel-inner']}>
+				{images.map((image, index) => (
+					<div className={`${styles['carousel-item']} ${styles.fade} ${index == current ? styles.active : ''}`} key={image}>
+						<img src={image} />
+					</div>
+				))}
 			</div>
 			<button type="button" onClick={() => setCurrent(current == 0 ? images.length - 1 : current - 1)}>
 			</button>
