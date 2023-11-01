@@ -16,6 +16,7 @@ export interface Playlist {
   createdAt: Date
   updatedAt: Date
   ownerId: number
+  videos: Array<Video>
 }
 
 export interface User {

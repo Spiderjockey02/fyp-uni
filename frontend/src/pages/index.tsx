@@ -1,19 +1,20 @@
 import axios from 'axios';
 import PlaylistCarousel from '@/components/Carousels/Playlist';
-import type { Video, Playlist } from '@/types';
+import type { Playlist } from '@/types';
 import Carousel from '@/components/Carousels/Banner';
 import MainLayout from '@/layouts/main';
 import Link from 'next/link';
 import VideoContainer from '@/components/VideoContainer';
 import { useState } from 'react';
+import PrimaryButton from '@/components/Buttons/Primary';
 
 interface Props {
-	videos: Array<Video>
 	playlists: Array<Playlist>
 	error?: string
+	total: number
 }
 
-export default function Home({ videos, playlists: pl, total }: Props) {
+export default function Home({ playlists: pl, total }: Props) {
 
 	const [playlists, setPlaylists] = useState<Array<Playlist>>(pl);
 	const [page, setPage] = useState(1);
@@ -37,13 +38,13 @@ export default function Home({ videos, playlists: pl, total }: Props) {
 
 				{/* Upload playlists */}
 				<div className="container">
-					{playlists.map((playlist) => (
+					{playlists.filter(p => p.videos.length > 0).map((playlist) => (
 						<>
 							<Link href={`/playlist/${playlist.id}`}>
-								<h2 className="font-weight-light">{playlist.title}</h2>
+								<h2 className="playlist-title">{playlist.title}</h2>
 							</Link>
 							<PlaylistCarousel>
-								{videos.length > 0 && videos.sort((a, b) => a.createdAt - b.createdAt).map(video => (
+								{playlist.videos.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()).map(video => (
 									<VideoContainer key={video.id} video={video} />
 								))}
 							</PlaylistCarousel>
@@ -51,7 +52,7 @@ export default function Home({ videos, playlists: pl, total }: Props) {
 						</>
 					))}
 				</div>
-				{playlists.length !== total ? <button style={{ marginLeft: '47%' }} onClick={() => loadNextPlaylist()}>Load more</button> : null}
+				{playlists.length !== total ? <PrimaryButton style={{ marginLeft: '47%' }} onClick={() => loadNextPlaylist()}>Load more</PrimaryButton> : null}
 			</div>
 		</MainLayout>
 	);
@@ -59,9 +60,9 @@ export default function Home({ videos, playlists: pl, total }: Props) {
 
 export async function getServerSideProps() {
 	try {
-		const [{ data }, { data: data2 }] = await Promise.all([axios.get(`${process.env.BACKENDURL}/api/videos`), axios.get(`${process.env.BACKENDURL}/api/playlists`)]);
-		return { props: { videos: data.videos, playlists: data2.playlists, total: data2.total } };
+		const { data } = await axios.get(`${process.env.BACKENDURL}/api/playlists`);
+		return { props: { playlists: data.playlists, total: data.total } };
 	} catch (error) {
-		return { props: { videos: [], playlists:[], error: 'API server currently unavailable' } };
+		return { props: { playlists: [], total: 0, error: 'API server currently unavailable' } };
 	}
 }
