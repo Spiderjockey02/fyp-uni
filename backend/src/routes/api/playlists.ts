@@ -8,7 +8,7 @@ export function run() {
 
 		// Fetch playlists from database
 		try {
-			const [playlists, total] = await Promise.all([fetchPlaylists({ page: isNaN(parseInt(page)) ? 0 : Number(page) }), fetchPlaylistCount()]);
+			const [playlists, total] = await Promise.all([fetchPlaylists({ page: isNaN(parseInt(page)) ? 0 : Number(page), includeVideos: true }), fetchPlaylistCount()]);
 			res.json({ playlists, total });
 		} catch (err) {
 			console.log(err);

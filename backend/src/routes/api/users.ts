@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { fetchUsers } from '../../database/User';
-
 const router = Router();
 
 export function run() {
