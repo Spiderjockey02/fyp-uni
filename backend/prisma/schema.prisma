@@ -37,8 +37,14 @@ model User {
   lastName                        String
   email                           String      @unique
   password                        String
+  role                            Role        @default(USER)
   createdAt                       DateTime    @default(now())
   updatedAt                       DateTime    @updatedAt
   videos                          Video[]
   playlists                       Playlist[]
+}
+
+enum Role {
+  USER
+  INFLUENCER
 }
