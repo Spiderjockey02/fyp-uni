@@ -4,7 +4,7 @@ import type { Playlist } from '@/types';
 import Carousel from '@/components/Carousels/Banner';
 import MainLayout from '@/layouts/main';
 import Link from 'next/link';
-import VideoContainer from '@/components/VideoContainer';
+import VideoContainer from '@/components/Cards/Video';
 import { useState } from 'react';
 import PrimaryButton from '@/components/Buttons/Primary';
 

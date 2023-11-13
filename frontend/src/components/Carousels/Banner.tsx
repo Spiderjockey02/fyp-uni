@@ -34,10 +34,6 @@ export default function BannerCarousel({ images }: Props) {
 					</div>
 				))}
 			</div>
-			<button type="button" onClick={() => setCurrent(current == 0 ? images.length - 1 : current - 1)}>
-			</button>
-			<button type="button" onClick={() => setCurrent(current + 1 == images.length ? 0 : current + 1)}>
-			</button>
 		</div>
 	);
 }

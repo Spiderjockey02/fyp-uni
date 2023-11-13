@@ -1,0 +1,41 @@
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  appearance: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-label {
+  margin-bottom: 0.5rem;
+}
+
+.form-check {
+  display: block;
+  min-height: 1.5rem;
+  padding-left: 1.5em;
+  margin-bottom: 0.125rem;
+}
+.form-check .form-check-input {
+  float: left;
+  margin-left: -1.5em;
+  border-radius: 0.25em;
+}
+
+.form-text {
+  margin-top: 0.25rem;
+  font-size: .875em;
+  color: red;
+}
+
+.form-input-error {
+  border: 1px solid red;
+}

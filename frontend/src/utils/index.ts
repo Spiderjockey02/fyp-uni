@@ -11,3 +11,19 @@ export function formatViews(n: number) {
 export function concatNames(user: User | undefined) {
 	return `${user?.firstName} ${user?.lastName}`;
 }
+
+export function msToTime(duration: number) {
+	let seconds = parseInt(`${(duration / 1000) % 60}`, 10);
+	let minutes = parseInt(`${(duration / (1000 * 60)) % 60}`, 10);
+	let hours = parseInt(`${(duration / (1000 * 60 * 60))}`, 10);
+
+	hours = hours < 10 ? Number('0' + hours) : hours;
+	minutes = minutes < 10 ? Number('0' + minutes) : minutes;
+	seconds = seconds < 10 ? Number('0' + seconds) : seconds;
+
+	if (hours == 0) {
+		return minutes + ':' + seconds;
+	} else {
+		return hours + ':' + minutes + ':' + seconds;
+	}
+}

@@ -9,7 +9,7 @@ export function run() {
 	});
 
 	// When user logins
-	router.get('/signIn', async (req, res) => {
+	router.post('/signIn', async (req, res) => {
 		const { email, password } = req.body;
 
 		// Validate inputs
@@ -51,7 +51,7 @@ export function run() {
 		try {
 			// Check if email is already being used
 			const possibleUser = await fetchUserByEmail(email);
-			if (possibleUser != null) return res.json({ error: 'Email is already in use' });
+			if (possibleUser != null) return res.json({ error: { type: 'email', message: 'Email is already in use' } });
 
 			// Hash password
 			const salt = bcrypt.genSaltSync(10);
