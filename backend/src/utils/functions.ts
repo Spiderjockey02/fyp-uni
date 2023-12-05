@@ -17,13 +17,10 @@ export async function getSession(req: Request): Promise<JWT | null> {
 	const parsedcookies = cookies.map((i: string) => i.split('='));
 
 	// Get session token (Could be secure or not so check both)
-	let sessionToken = parsedcookies.find(i => i[0] == '__Secure-next-auth.session-token')?.[1];
-	if (sessionToken == null) {
-		sessionToken = parsedcookies.find(i => i[0] == 'next-auth.session-token')?.[1];
-	}
+	const sessionToken = parsedcookies.find(i => ['__Secure-next-auth.session-token', 'next-auth.session-token'].includes(i[0]))?.[1];
 	if (!sessionToken) return null;
 
-	const session = await decode({ token: sessionToken, secret: process.env.sessionSecret as string });
+	const session = await decode({ token: sessionToken, secret: process.env.NEXTAUTH_SECRET as string });
 	if (session == null) return null;
 	sessionStore[sessionToken] = session;
 	return session;
