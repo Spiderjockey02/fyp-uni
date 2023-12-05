@@ -1,3 +1,4 @@
 import Logger from './Logger';
 import CONSTANTS from './CONSTANTS';
-export { Logger, CONSTANTS };
+import { getSession } from './functions';
+export { Logger, CONSTANTS, getSession };
