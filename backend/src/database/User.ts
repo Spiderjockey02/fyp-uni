@@ -1,5 +1,5 @@
 import client from './client';
-import type { User } from '@prisma/client';
+import type { User, Role } from '@prisma/client';
 import type { fetchUsersParam, fetchUserByIdParam, createUserParam } from '../types/databaseParams';
 
 
@@ -69,6 +69,31 @@ export async function createUser(data: createUserParam): Promise<User> {
 			lastName: data.lastName,
 			email: data.email,
 			password: data.password,
+		},
+	});
+}
+
+type updateUserParam = {
+	userId: number
+	firstName?: string
+	lastName?: string
+	email?: string
+	password?: string
+	role?: Role
+}
+
+
+export async function updateUser(data: updateUserParam): Promise<User> {
+	return client.user.update({
+		where: {
+			id: data.userId,
+		},
+		data: {
+			firstName: data.firstName,
+			lastName: data.lastName,
+			email: data.email,
+			password: data.password,
+			role: data.role,
 		},
 	});
 }

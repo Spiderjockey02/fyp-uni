@@ -1,6 +1,9 @@
 import { Router } from 'express';
-import { createUser, fetchUserByEmail } from '../../database/User';
+import { createUser, fetchUserByEmail, updateUser } from '../../database/User';
 import * as bcrypt from 'bcrypt';
+import { isLoggedIn } from '../../utils/middleware';
+import { getSession } from '../../utils/functions';
+import type { JWT } from 'next-auth/jwt';
 const router = Router();
 
 export function run() {
@@ -68,6 +71,28 @@ export function run() {
 		} catch (err) {
 			console.log(err);
 			res.json({ error: 'An error occured when registering account.' });
+		}
+	});
+
+	// When user updates their information
+	router.patch('/user', isLoggedIn, async (req, res) => {
+		const { firstName, lastName, password, email } = req.body;
+		const { user } = await getSession(req) as JWT;
+
+		// Validate inputs
+		if (firstName && firstName.length == 0) return res.json({ error: 'firstName can not be an empty string.' });
+		if (lastName && lastName.length == 0) return res.json({ error: 'lastName is missing in request.' });
+		if (email && email.length == 0) return res.json({ error: 'email is missing in request.' });
+		if (password && password.length == 0) return res.json({ error: 'password is missing in request.' });
+
+		try {
+			await updateUser({
+				userId: user.id,
+				firstName, lastName, password, email,
+			});
+		} catch (err) {
+			console.log(err);
+			res.json({ error: 'An error occured when updating user information' });
 		}
 	});
 

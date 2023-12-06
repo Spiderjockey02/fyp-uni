@@ -16,3 +16,11 @@ export async function isInfluencer(req: Request, res: Response, next: NextFuncti
 	// If not they are logged in or an admin
 	return res.status(403).json({ error: 'You do not have permission' });
 }
+
+export async function isLoggedIn(req: Request, res: Response, next: NextFunction) {
+	const ses = await getSession(req);
+	if (ses?.user != undefined) return next();
+
+	// Requestee is not logged into any account
+	res.status(403).json({ error: 'You do not have permission.' });
+}
