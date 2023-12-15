@@ -22,10 +22,14 @@ export function Body({ children }: Props) {
 }
 
 
-export function Title({ children }: Props) {
+interface TitleProp {
+	text: string
+}
+
+export function Title({ text }: TitleProp) {
 	return (
 		<h5 className={styles['card-title']}>
-			{children}
+			{text}
 		</h5>
 	);
 }
