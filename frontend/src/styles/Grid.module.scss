@@ -1,0 +1,83 @@
+@use "sass:math";
+$columns: 12;
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0;
+  margin-right: calc(1.5rem * -.5);
+  margin-left: calc(1.5rem * -.5);
+}
+
+.col {
+  flex: 1 0 0%;
+}
+
+
+// Small screens < 576px width
+@media screen and (min-width: 576px) {
+  @mixin col-x-list {
+    @for $i from 1 through $columns {
+      .col-sm-#{$i} {
+        flex: 0 0 auto;
+        width: percentage(math.div($i, $columns));
+      }
+    }
+  }
+  @include col-x-list;
+}
+
+// Medium screens < 720px width
+@media screen and (min-width: 720px) {
+  @mixin col-x-list {
+    @for $i from 1 through $columns {
+      .col-md-#{$i} {
+        flex: 0 0 auto;
+        width: percentage(math.div($i, $columns));
+      }
+    }
+  }
+  @include col-x-list;
+}
+
+// Large screens < 992px width
+@media screen and (min-width: 992px) {
+  @mixin col-x-list {
+    @for $i from 1 through $columns {
+      @debug math.div($i, $columns);
+      .col-lg-#{$i} {
+        flex: 0 0 auto;
+        width: percentage(math.div($i, $columns));
+      }
+    }
+  }
+  @include col-x-list;
+}
+
+// Extra Large screens < 1200px width
+@media screen and (min-width: 1200px) {
+  @mixin col-x-list {
+    @for $i from 1 through $columns {
+      @debug math.div($i, $columns);
+      .col-xl-#{$i} {
+        flex: 0 0 auto;
+        width: percentage(math.div($i, $columns));
+      }
+    }
+  }
+  @include col-x-list;
+}
+
+// Extra Extra Large screens < 1400px width
+@media screen and (min-width: 1400px) {
+  @mixin col-x-list {
+    @for $i from 1 through $columns {
+      @debug math.div($i, $columns);
+      .col-xxl-#{$i} {
+        flex: 0 0 auto;
+        width: percentage(math.div($i, $columns));
+      }
+    }
+  }
+  @include col-x-list;
+}
