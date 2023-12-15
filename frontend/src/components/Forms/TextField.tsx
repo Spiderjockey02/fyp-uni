@@ -4,7 +4,7 @@ import type { ChangeEvent } from 'react';
 interface Props {
   label: string
 	id: string
-	type?: string
+	type?: 'text' | 'email' | 'password'
 	error?: string
 	onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }

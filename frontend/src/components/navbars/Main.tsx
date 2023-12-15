@@ -2,8 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUpload, faBell } from '@fortawesome/free-solid-svg-icons';
+import type { User } from 'next-auth';
 
-export default function NavBar() {
+interface Props {
+	user: User | undefined
+}
+
+export default function NavBar({ user }: Props) {
 	return (
 		<nav className="flex-div">
 			<div className="nav-left flex-div">
@@ -20,9 +25,15 @@ export default function NavBar() {
 				</div>
 			</div>
 			<div className="nav-right flex-div">
-				<FontAwesomeIcon icon={faUpload} width={25} height={25} />
-				<FontAwesomeIcon icon={faBell} width={25} height={25} />
-				<Image className="user-icon" src="https://placehold.co/35x35" width={35} height={35} alt="menu" />
+				{user === undefined ?
+					<Link href="/login">Login</Link>
+					:
+					<>
+						<FontAwesomeIcon icon={faUpload} width={25} height={25} />
+						<FontAwesomeIcon icon={faBell} width={25} height={25} />
+						<Image className="user-icon" src="https://placehold.co/35x35" width={35} height={35} alt="menu" />
+					</>
+				}
 			</div>
 		</nav>
 	);

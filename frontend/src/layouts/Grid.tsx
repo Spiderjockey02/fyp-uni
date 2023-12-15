@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { CSSProperties } from 'react';
 
 interface Props {
-	children: ReactElement
+	children: Array<ReactElement> | ReactElement
 	className?: string
 	style?: CSSProperties
 }

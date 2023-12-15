@@ -5,6 +5,8 @@ import axios from 'axios';
 import TextField from '@/components/Forms/TextField';
 import CheckField from '@/components/Forms/CheckField';
 import Link from 'next/link';
+import { Card, Col, Container, Row } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface Error {
 	type: 'firstName' | 'lastName' | 'email' | 'password' | 'repPassword'
@@ -51,15 +53,26 @@ export default function Register() {
 	}
 
 	return (
-		<div className="container" style={{ backgroundColor: 'white' }}>
-			<TextField label="First name:" id="firstName" onChange={(e) => setFirstName(e.target.value)} error={errors.find((e) => e.type == 'firstName')?.message} />
-			<TextField label="Last name:" id="lastName" onChange={(e) => setLastName(e.target.value)} error={errors.find((e) => e.type == 'lastName')?.message} />
-			<TextField label="Email:" id="email" type="email" onChange={(e) => setEmail(e.target.value)} error={errors.find((e) => e.type == 'email')?.message} />
-			<TextField label="Password:" id="password" type="password" onChange={(e) => setPassword(e.target.value)} error={errors.find((e) => e.type == 'password')?.message} />
-			<TextField label="Repeat Password:" id="repeatPassword" type="password" onChange={(e) => setRepPassword(e.target.value)} error={errors.find((e) => e.type == 'repPassword')?.message} />
-			<CheckField label="I accept the Terms of Use & Privacy Policy" id="acceptTOS" onChange={(e) => setAccepted(e.target.checked)} />
-			<SuccessButton onClick={() => submit()}>Submit</SuccessButton>
-			<p>Already have an account? <Link href="/login">Login</Link></p>
-		</div>
+		<section style={{ minHeight: '100vh!important' }}>
+			<Container style={{ backgroundColor: 'white' }}>
+				<Row className="d-flex justify-content-center align-items-center h-100" style={{ paddingTop: '15%' }}>
+					<Col lg={8} xl={7}>
+						<Card>
+							<Card.Body>
+								<Card.Title className="text-center h1 fw-bold">Register</Card.Title>
+								<TextField label="First name:" id="firstName" onChange={(e) => setFirstName(e.target.value)} error={errors.find((e) => e.type == 'firstName')?.message} />
+								<TextField label="Last name:" id="lastName" onChange={(e) => setLastName(e.target.value)} error={errors.find((e) => e.type == 'lastName')?.message} />
+								<TextField label="Email:" id="email" type="email" onChange={(e) => setEmail(e.target.value)} error={errors.find((e) => e.type == 'email')?.message} />
+								<TextField label="Password:" id="password" type="password" onChange={(e) => setPassword(e.target.value)} error={errors.find((e) => e.type == 'password')?.message} />
+								<TextField label="Repeat Password:" id="repeatPassword" type="password" onChange={(e) => setRepPassword(e.target.value)} error={errors.find((e) => e.type == 'repPassword')?.message} />
+								<CheckField label="I accept the Terms of Use & Privacy Policy" id="acceptTOS" onChange={(e) => setAccepted(e.target.checked)} />
+								<SuccessButton onClick={() => submit()}>Submit</SuccessButton>
+								<p>Already have an account? <Link href="/login">Login</Link></p>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+			</Container>
+		</section>
 	);
 }

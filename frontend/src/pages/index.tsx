@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import PlaylistCarousel from '@/components/Carousels/Playlist';
 import type { Playlist } from '@/types';
 import Carousel from '@/components/Carousels/Banner';
 import MainLayout from '@/layouts/main';
-import Link from 'next/link';
 import VideoContainer from '@/components/Cards/Video';
-import { useState } from 'react';
 import PrimaryButton from '@/components/Buttons/Primary';
 
 interface Props {
@@ -15,10 +16,11 @@ interface Props {
 }
 
 export default function Home({ playlists: pl, total }: Props) {
-
+	const { data: session, status } = useSession();
 	const [playlists, setPlaylists] = useState<Array<Playlist>>(pl);
 	const [page, setPage] = useState(1);
 
+	if (status == 'loading') return null;
 	async function loadNextPlaylist() {
 		try {
 			const { data } = await axios.get(`/api/playlists?page=${page}`);
@@ -31,7 +33,7 @@ export default function Home({ playlists: pl, total }: Props) {
 	}
 
 	return (
-		<MainLayout>
+		<MainLayout user={session?.user}>
 			<div className="container-fluid">
 				{/* Recently uploaded content carousel */}
 				<Carousel images={['https://placehold.co/1080x300', 'https://placehold.co/1080x301', 'https://placehold.co/1080x302']}/>
@@ -53,6 +55,7 @@ export default function Home({ playlists: pl, total }: Props) {
 					))}
 				</div>
 				{playlists.length !== total ? <PrimaryButton style={{ marginLeft: '47%' }} onClick={() => loadNextPlaylist()}>Load more</PrimaryButton> : null}
+				<PrimaryButton style={{ marginLeft: '47%' }} onClick={() => loadNextPlaylist()}>Load more</PrimaryButton>
 			</div>
 		</MainLayout>
 	);
