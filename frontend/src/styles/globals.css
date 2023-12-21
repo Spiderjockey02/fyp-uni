@@ -9,11 +9,6 @@ body {
   background-color: #141414;
 }
 
-a {
-  text-decoration: none;
-  color: #ffffff;
-}
-
 label {
   display: inline-block;
 }
@@ -170,4 +165,14 @@ nav {
   font-weight: 600;
   display: block;
   margin-bottom: 5px;
+}
+
+.horizontal-center {
+  justify-content: center;
+  display: flex;
+}
+
+.vertical-center {
+  -ms-transform: translateY(75%);
+  transform: translateY(75%);
 }

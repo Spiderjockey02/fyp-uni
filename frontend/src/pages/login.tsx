@@ -1,15 +1,15 @@
 import TextField from '@/components/Forms/TextField';
-import type { GetServerSidePropsContext } from 'next';
+import { LinkButton, SecondaryButton } from '@/components/Buttons';
+import Card from '@/components/Cards/Card';
+import { Row, Col } from '@/layouts/Grid';
 import { getServerSession } from 'next-auth/next';
-import Link from 'next/link';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import type { SignInResponse } from 'next-auth/react';
-import SuccessButton from '@/components/Buttons/Success';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { useRouter } from 'next/router';
-import { Row, Col } from '@/layouts/Grid';
-import Card, { Body, Title } from '@/components/Cards/Card';
+import type { SignInResponse } from 'next-auth/react';
+import type { GetServerSidePropsContext } from 'next';
+
 interface Error {
 	type: 'email' | 'password'
 	message: string
@@ -42,24 +42,20 @@ export default function Login() {
 	}
 
 	return (
-		<section style={{ minHeight: '100vh!important' }}>
-			<div>
-				<Row className="d-flex justify-content-center align-items-center h-100" style={{ paddingTop: '15%', justifyContent: 'center!important', display: 'flex!important' }}>
-					<Col lg={8} xl={7}>
-						<Card>
-							<Body>
-								<>
-									<Title className="text-center h1 fw-bold"><p>Login</p></Title>
-									<TextField label='Email:' id="email" onChange={(e) => setEmail(e.target.value)} error={errors.find((e) => e.type == 'email')?.message} />
-									<TextField label="Password:" id="password" type="password" onChange={(e) => setPassword(e.target.value)} error={errors.find((e) => e.type == 'password')?.message} />
-									<p>Need an account? <Link href="/register">Register</Link></p>
-									<SuccessButton onClick={() => submit()}>Submit</SuccessButton>
-								</>
-							</Body>
-						</Card>
-					</Col>
-				</Row>
-			</div>
+		<section style={{ minHeight: '100vh', backgroundColor: '#1c2831' }}>
+			<Row className="horizontal-center vertical-center">
+				<Col lg={6} xl={6}>
+					<Card style={{ boxShadow: '4px 4px #888888' }}>
+						<Card.Body>
+							<Card.Title text="Login" />
+							<TextField label='Email:' id="email" onChange={(e) => setEmail(e.target.value)} error={errors.find((e) => e.type == 'email')?.message} />
+							<TextField label="Password:" id="password" type="password" onChange={(e) => setPassword(e.target.value)} error={errors.find((e) => e.type == 'password')?.message} />
+							<p>Need an account? <LinkButton href="/register">Register</LinkButton></p>
+							<SecondaryButton onClick={() => submit()} style={{ float: 'right' }}>Submit</SecondaryButton>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
 		</section>
 	);
 }

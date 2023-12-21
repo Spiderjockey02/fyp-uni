@@ -1,3 +1,13 @@
+.link {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.link:hover {
+  cursor: pointer;
+}
+
 .button {
   display: inline-block;
   padding: 0.375rem 0.75rem;
