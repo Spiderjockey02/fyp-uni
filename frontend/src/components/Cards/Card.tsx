@@ -1,19 +1,20 @@
 import styles from '@/styles/Card.module.css';
-import { ReactElement } from 'react';
+import type { CSSProperties, ReactElement } from 'react';
 
 interface Props {
-  children: ReactElement
+  children: ReactElement | Array<ReactElement>
+	style?: CSSProperties
 }
 
-export default function Card({ children }: Props) {
+function Card({ style, children }: Props) {
 	return (
-		<div className={styles.card}>
+		<div className={styles.card} style={style}>
 			{children}
 		</div>
 	);
 }
 
-export function Body({ children }: Props) {
+function Body({ children }: Props) {
 	return (
 		<div className={styles['card-body']}>
 			{children}
@@ -21,15 +22,18 @@ export function Body({ children }: Props) {
 	);
 }
 
-
 interface TitleProp {
 	text: string
 }
 
-export function Title({ text }: TitleProp) {
+function Title({ text }: TitleProp) {
 	return (
-		<h5 className={styles['card-title']}>
+		<h5 className={`${styles['card-title']} horizontal-center`}>
 			{text}
 		</h5>
 	);
 }
+
+Card.Body = Body;
+Card.Title = Title;
+export default Card;

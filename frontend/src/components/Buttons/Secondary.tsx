@@ -1,5 +1,5 @@
 import styles from '@/styles/Button.module.css';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
 interface Props {
   children: string
