@@ -19,9 +19,8 @@ export const authOptions = {
 					password: credentials.password,
 					email: credentials.email,
 				});
-
-				console.log(data);
-				return (data.error) ? null : data.user;
+				if (data.error) throw new Error(data.error);
+				return data.user;
 			},
 		}),
 	],

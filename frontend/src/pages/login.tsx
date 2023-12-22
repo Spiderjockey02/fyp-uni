@@ -4,7 +4,7 @@ import Card from '@/components/Cards/Card';
 import { Row, Col } from '@/layouts/Grid';
 import VerticalContainer from '@/components/Containers/VerticalContainer';
 import { getServerSession } from 'next-auth/next';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { useRouter } from 'next/router';
@@ -22,7 +22,8 @@ export default function Login() {
 	const [errors, setErrors] = useState<Array<Error>>([]);
 	const router = useRouter();
 
-	async function submit() {
+	async function submit(e?: FormEvent<HTMLFormElement>) {
+		e?.preventDefault();
 		const error = [] as Array<Error>;
 
 		if (email.length == 0) error.push({ type: 'email', message: 'Missing email.' });
@@ -36,7 +37,19 @@ export default function Login() {
 			email, password,
 		}) as SignInResponse;
 
-		if (res.error) return setErrors([{ type: 'email', message: 'Failed to login' }]);
+		// Check for errors
+		if (res.error) {
+			switch (res.error) {
+				case 'Email is incorrect':
+					error.push({ type: 'email', message: res.error });
+					break;
+				case 'Password is incorrect':
+					error.push({ type: 'password', message: res.error });
+					break;
+				default: error.push({ type: 'email', message: 'An error has occured, please try again.' });
+			}
+			return setErrors(error);
+		}
 
 		// Move to the callback URL so user knows they are logged in
 		router.push(res.url as string);
@@ -50,10 +63,12 @@ export default function Login() {
 						<Card style={{ boxShadow: '4px 4px #888888' }}>
 							<Card.Body>
 								<Card.Title text="Login" />
-								<TextField label='Email:' id="email" onChange={(e) => setEmail(e.target.value)} error={errors.find((e) => e.type == 'email')?.message} />
-								<TextField label="Password:" id="password" type="password" onChange={(e) => setPassword(e.target.value)} error={errors.find((e) => e.type == 'password')?.message} />
-								<p>Need an account? <LinkButton href="/register">Register</LinkButton></p>
-								<SecondaryButton onClick={() => submit()} style={{ float: 'right' }}>Login</SecondaryButton>
+								<form onSubmit={(e) => submit(e)}>
+									<TextField label='Email:' id="email" onChange={(e) => setEmail(e.target.value)} error={errors.find((e) => e.type == 'email')?.message} />
+									<TextField label="Password:" id="password" type="password" onChange={(e) => setPassword(e.target.value)} error={errors.find((e) => e.type == 'password')?.message} />
+									<p>Need an account? <LinkButton href="/register">Register</LinkButton></p>
+									<SecondaryButton onClick={() => submit()} style={{ float: 'right' }}>Login</SecondaryButton>
+								</form>
 							</Card.Body>
 						</Card>
 					</Col>

@@ -28,7 +28,6 @@ interface Col {
 
 export function Col({ children, className, style, xs, sm, md, lg, xl, xxl }: Col & Props) {
 	const columns = columnCreator({ xs, sm, md, lg, xl, xxl });
-	console.log(columns);
 	return (
 		<div className={`${styles.col} ${className != undefined ? className : ''} ${columns.map(c => styles[c]).join(' ')}`} style={style}>
 			{children}
@@ -37,7 +36,6 @@ export function Col({ children, className, style, xs, sm, md, lg, xl, xxl }: Col
 }
 
 function columnCreator({ xs, sm, md, lg, xl, xxl }: Col) {
-	console.log('md', md);
 	const columns = [];
 	if (xs !== undefined && (xs >= 0 || xs <= 12)) columns.push(`col-xs-${xs}`);
 	if (sm !== undefined && (sm >= 0 || sm <= 12)) columns.push(`col-sm-${sm}`);
