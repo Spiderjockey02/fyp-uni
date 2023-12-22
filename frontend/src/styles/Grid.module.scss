@@ -2,6 +2,7 @@
 $columns: 12;
 
 .row {
+  min-height: inherit;
   display: flex;
   flex-wrap: wrap;
   margin-top: 0;

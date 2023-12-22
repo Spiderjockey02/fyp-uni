@@ -170,9 +170,10 @@ nav {
 .horizontal-center {
   justify-content: center;
   display: flex;
+  min-width: auto;
 }
 
 .vertical-center {
-  -ms-transform: translateY(75%);
-  transform: translateY(75%);
+  -ms-transform: translateY(calc(50vh - calc(555px / 2)));
+  transform: translateY(calc(50vh - calc(555px / 2)));
 }

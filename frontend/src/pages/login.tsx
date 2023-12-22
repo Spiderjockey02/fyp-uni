@@ -2,6 +2,7 @@ import TextField from '@/components/Forms/TextField';
 import { LinkButton, SecondaryButton } from '@/components/Buttons';
 import Card from '@/components/Cards/Card';
 import { Row, Col } from '@/layouts/Grid';
+import VerticalContainer from '@/components/Containers/VerticalContainer';
 import { getServerSession } from 'next-auth/next';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
@@ -43,19 +44,21 @@ export default function Login() {
 
 	return (
 		<section style={{ minHeight: '100vh', backgroundColor: '#1c2831' }}>
-			<Row className="horizontal-center vertical-center">
-				<Col lg={6} xl={6}>
-					<Card style={{ boxShadow: '4px 4px #888888' }}>
-						<Card.Body>
-							<Card.Title text="Login" />
-							<TextField label='Email:' id="email" onChange={(e) => setEmail(e.target.value)} error={errors.find((e) => e.type == 'email')?.message} />
-							<TextField label="Password:" id="password" type="password" onChange={(e) => setPassword(e.target.value)} error={errors.find((e) => e.type == 'password')?.message} />
-							<p>Need an account? <LinkButton href="/register">Register</LinkButton></p>
-							<SecondaryButton onClick={() => submit()} style={{ float: 'right' }}>Submit</SecondaryButton>
-						</Card.Body>
-					</Card>
-				</Col>
-			</Row>
+			<VerticalContainer>
+				<Row className='horizontal-center'>
+					<Col lg={6} xl={6}>
+						<Card style={{ boxShadow: '4px 4px #888888' }}>
+							<Card.Body>
+								<Card.Title text="Login" />
+								<TextField label='Email:' id="email" onChange={(e) => setEmail(e.target.value)} error={errors.find((e) => e.type == 'email')?.message} />
+								<TextField label="Password:" id="password" type="password" onChange={(e) => setPassword(e.target.value)} error={errors.find((e) => e.type == 'password')?.message} />
+								<p>Need an account? <LinkButton href="/register">Register</LinkButton></p>
+								<SecondaryButton onClick={() => submit()} style={{ float: 'right' }}>Login</SecondaryButton>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+			</VerticalContainer>
 		</section>
 	);
 }
