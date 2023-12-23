@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createUser, fetchUserByEmail, updateUser } from '../../database/User';
+import { createUser, fetchUserByEmail, fetchUserById, updateUser } from '../../database/User';
 import * as bcrypt from 'bcrypt';
 import { isLoggedIn } from '../../utils/middleware';
 import { getSession } from '../../utils/functions';
@@ -86,13 +86,34 @@ export function run() {
 		if (password && password.length == 0) return res.json({ error: 'password is missing in request.' });
 
 		try {
+			const salt = bcrypt.genSaltSync(10);
+			const hashedPassword = bcrypt.hashSync(password, salt);
+
 			await updateUser({
 				userId: user.id,
-				firstName, lastName, password, email,
+				firstName, lastName, password: hashedPassword, email,
 			});
+			res.json({ success: 'Successfully updated user information' });
 		} catch (err) {
 			console.log(err);
 			res.json({ error: 'An error occured when updating user information' });
+		}
+	});
+
+	router.get('/:userId', isLoggedIn, async (req, res) => {
+		// Validate session
+		const session = await getSession(req);
+		if (!session?.user) return res.json({ error: 'Invalid session' });
+
+		// Validate userId
+		const userId = req.params.userId;
+
+		try {
+			const user = await fetchUserById({ id: Number(userId) });
+			res.json({ user });
+		} catch (err) {
+			console.log(err);
+			res.json({});
 		}
 	});
 
