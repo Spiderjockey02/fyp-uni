@@ -1,8 +1,8 @@
 import styles from '@/styles/Button.module.css';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 interface Props {
-  children: string
+  children: ReactNode
   onClick?: () => void
   style?: CSSProperties
 }
